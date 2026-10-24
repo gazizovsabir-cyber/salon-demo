@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Название студии — студия красоты</title>
+  <meta name="description" content="Студия красоты: стрижки, окрашивание, маникюр, брови и ресницы. Оставьте заявку на удобное время.">
+  <meta name="theme-color" content="#f5f2ec">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Название студии — студия красоты">
+  <meta property="og:description" content="Пространство, где внимание к деталям становится частью вашего образа.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1626383137804-ff908d2753a2?auto=format&fit=crop&w=1200&h=630&q=75">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Noto+Serif+Display:wght@200;300;400&display=swap&subset=cyrillic" rel="stylesheet">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M5 9h14M5 15h14"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><circle cx="9" cy="10" r="1.6"/><path d="M4 17l5-4.5 3.5 3 3-2.5L20 16.5"/></symbol>
+    <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6.5" cy="7" r="2.5"/><circle cx="6.5" cy="17" r="2.5"/><path d="M8.7 8.3L20 17M8.7 15.7L20 7"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14" rx="2.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0113 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.5 3.5h3l1.5 4-2 1.3a10 10 0 005.2 5.2l1.3-2 4 1.5v3a2 2 0 01-2.2 2A16 16 0 014.5 5.7a2 2 0 012-2.2z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 12a7.5 7.5 0 01-11 6.6L4.5 20l1.4-4.3A7.5 7.5 0 1120 12z"/></symbol>
+    <symbol id="i-detail" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5M10.5 7.5v6M7.5 10.5h6"/></symbol>
+    <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20a7.5 7.5 0 0115 0"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13.5 14-14 .5 9-5 14-13 14z"/><path d="M5 19l7-7"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 19.5s-7.5-4.6-7.5-10A4.2 4.2 0 0112 7a4.2 4.2 0 017.5 2.5c0 5.4-7.5 10-7.5 10z"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Перейти к содержанию</a>
+
+  <div class="demo-bar" data-demo-bar hidden>
+    <span class="demo-bar__badge">Демо-шаблон</span>
+    <span class="demo-bar__text">Концепт сайта. Тексты и фото — примеры.</span>
+    <label class="demo-bar__type">
+      <span class="visually-hidden">Тип бизнеса</span>
+      <select data-type-switch></select>
+    </label>
+  </div>
+
+  <header class="site-header" data-header>
+    <div class="site-header__inner">
+      <a class="logo" href="#top" data-brand-logo>
+        <span data-c="brand.name">Название студии</span>
+      </a>
+      <nav class="nav" aria-label="Основное меню">
+        <ul class="nav__list">
+          <li><a href="#top">Главная</a></li>
+          <li data-section-link="services"><a href="#services">Услуги</a></li>
+          <li data-section-link="gallery"><a href="#gallery">Наши работы</a></li>
+          <li data-section-link="about"><a href="#about">О студии</a></li>
+          <li data-section-link="contacts"><a href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn--dark btn--sm site-header__cta" href="#booking" data-book>
+        Записаться
+        <span class="btn__chip"><svg class="icon"><use href="#i-arrow"/></svg></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+        <span class="visually-hidden">Открыть меню</span>
+        <svg class="icon"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" hidden data-menu>
+      <ul class="mobile-menu__list">
+        <li><a href="#top">Главная</a></li>
+        <li data-section-link="services"><a href="#services">Услуги</a></li>
+        <li data-section-link="gallery"><a href="#gallery">Наши работы</a></li>
+        <li data-section-link="about"><a href="#about">О студии</a></li>
+        <li data-section-link="contacts"><a href="#contacts">Контакты</a></li>
+      </ul>
+      <a class="btn btn--dark btn--block" href="#booking" data-book>
+        Записаться
+        <span class="btn__chip"><svg class="icon"><use href="#i-arrow"/></svg></span>
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero__card">
+        <img class="hero__img" data-img="hero.image" src="https://images.unsplash.com/photo-1626383137804-ff908d2753a2?auto=format&fit=crop&w=2000&q=75" alt="Зал салона: чёрные кожаные кресла мастеров, зеркала и деревянный пол, у стойки администратор" fetchpriority="high">
+        <div class="hero__shade" aria-hidden="true"></div>
+
+        <p class="hero__wordmark" aria-hidden="true" data-fit data-c="brand.name">Название студии</p>
+
+        <div class="hero__aside">
+          <p class="hero__label" data-c="hero.label">Студия красоты</p>
+          <p class="hero__subtitle" data-c="hero.subtitle">Пространство, где внимание к деталям становится частью вашего образа.</p>
+          <ul class="hero__tags" data-hero-tags></ul>
+        </div>
+
+        <div class="hero__main">
+          <h1 class="hero__title" id="hero-title" data-c="hero.title">Ваша красота.<br>Ваш стиль.</h1>
+          <div class="hero__actions">
+            <a class="btn btn--light" href="#booking" data-book>
+              Записаться
+              <span class="btn__chip"><svg class="icon"><use href="#i-arrow"/></svg></span>
+            </a>
+            <a class="btn btn--ghost" href="#gallery" data-section-link="gallery">Смотреть работы</a>
+          </div>
+        </div>
+
+        <a class="hero__scroll" href="#quickbook" aria-label="Прокрутить вниз">
+          <span class="hero__mouse" aria-hidden="true"></span>
+          <span>Листайте вниз</span>
+        </a>
+
+        <a class="photo-credit" data-credit="hero.image" href="https://unsplash.com/photos/OKXwmdbdXkk" target="_blank" rel="noopener">Фото для примера</a>
+      </div>
+
+      <form class="quickbook" id="quickbook" data-quickbook data-section-link="booking" novalidate>
+        <label class="quickbook__field">
+          <svg class="icon"><use href="#i-scissors"/></svg>
+          <span class="visually-hidden">Услуга</span>
+          <select name="service" data-service-select>
+            <option value="">Выберите услугу</option>
+          </select>
+        </label>
+        <label class="quickbook__field">
+          <svg class="icon"><use href="#i-calendar"/></svg>
+          <span class="visually-hidden">Желаемая дата</span>
+          <input type="date" name="date" data-min-today aria-describedby="qb-date-hint">
+          <span class="quickbook__hint" id="qb-date-hint">Желаемый день</span>
+        </label>
+        <label class="quickbook__field">
+          <svg class="icon"><use href="#i-clock"/></svg>
+          <span class="visually-hidden">Удобное время</span>
+          <select name="time">
+            <option value="">Удобное время</option>
+            <option>Утро</option>
+            <option>День</option>
+            <option>Вечер</option>
+          </select>
+        </label>
+        <button class="quickbook__submit" type="submit">
+          <span class="quickbook__submit-text">Продолжить запись</span>
+          <span class="btn__chip btn__chip--lg"><svg class="icon"><use href="#i-arrow"/></svg></span>
+        </button>
+      </form>
+    </section>
+
+    <section class="section services" id="services" data-section="services" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title" id="services-title">Услуги студии</h2>
+            <p class="section-lead">Подберите то, что подходит именно вам.</p>
+          </div>
+          <div class="carousel-nav" data-carousel-nav>
+            <button class="round-btn" type="button" data-carousel-prev aria-label="Предыдущие услуги"><svg class="icon"><use href="#i-arrow-left"/></svg></button>
+            <button class="round-btn" type="button" data-carousel-next aria-label="Следующие услуги"><svg class="icon"><use href="#i-arrow"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <div class="services__viewport">
+        <ul class="services__track" data-services tabindex="-1"></ul>
+      </div>
+    </section>
+
+    <section class="section about" id="about" data-section="about" aria-labelledby="about-title">
+      <div class="container about__grid">
+        <div class="about__text reveal">
+          <h2 class="section-title" id="about-title" data-c="about.title">Красота в деталях</h2>
+          <p class="section-lead about__lead" data-c="about.text">Мы уделяем внимание деталям, ценим индивидуальность и стремимся сделать каждый визит комфортным. Для нас важны не только результат, но и атмосфера, в которой вы его получаете.</p>
+          <ul class="features" data-advantages></ul>
+        </div>
+        <figure class="about__media reveal">
+          <img data-img="about.image" src="https://images.unsplash.com/photo-1695527081827-fdbc4e77be9b?auto=format&fit=crop&w=1200&q=75" alt="Кресло у мойки для волос, растения и белая плитка" loading="lazy">
+          <a class="photo-credit photo-credit--dark" data-credit="about.image" href="https://unsplash.com/photos/Ui6DZ9A1eXU" target="_blank" rel="noopener">Фото для примера</a>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section gallery" id="gallery" data-section="gallery" aria-labelledby="gallery-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title" id="gallery-title">Результат говорит сам за себя</h2>
+            <p class="section-lead">Примеры работ нашей студии.</p>
+          </div>
+        </div>
+        <ul class="gallery__grid" data-gallery></ul>
+      </div>
+    </section>
+
+    <section class="section booking" id="booking" data-section="booking" aria-labelledby="booking-title">
+      <div class="container">
+        <div class="booking__card">
+          <div class="booking__intro">
+            <h2 class="section-title" id="booking-title">Запишитесь на удобное время</h2>
+            <p class="booking__lead">Оставьте заявку, и мы свяжемся с вами для уточнения деталей.</p>
+            <div class="booking__alt" data-booking-alt></div>
+          </div>
+
+          <form class="form" data-booking-form novalidate>
+            <div class="form__grid">
+              <div class="field">
+                <label for="f-name">Имя</label>
+                <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="60" aria-describedby="f-name-err">
+                <p class="field__error" id="f-name-err"></p>
+              </div>
+              <div class="field">
+                <label for="f-phone">Телефон</label>
+                <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" required maxlength="22" aria-describedby="f-phone-err">
+                <p class="field__error" id="f-phone-err"></p>
+              </div>
+              <fieldset class="field field--wide">
+                <legend>Как с вами связаться</legend>
+                <div class="chips">
+                  <label class="chip"><input type="radio" name="contactMethod" value="Звонок" checked><span>Звонок</span></label>
+                  <label class="chip"><input type="radio" name="contactMethod" value="Telegram"><span>Telegram</span></label>
+                  <label class="chip"><input type="radio" name="contactMethod" value="WhatsApp"><span>WhatsApp</span></label>
+                </div>
+              </fieldset>
+              <div class="field field--wide">
+                <label for="f-service">Услуга</label>
+                <select id="f-service" name="service" required data-service-select aria-describedby="f-service-err">
+                  <option value="">Выберите услугу</option>
+                </select>
+                <p class="field__error" id="f-service-err"></p>
+              </div>
+              <div class="field">
+                <label for="f-date">Желаемая дата <span class="field__opt">необязательно</span></label>
+                <input id="f-date" name="date" type="date" data-min-today>
+              </div>
+              <div class="field">
+                <label for="f-time">Удобное время <span class="field__opt">необязательно</span></label>
+                <select id="f-time" name="time">
+                  <option value="">Любое</option>
+                  <option>Утро</option>
+                  <option>День</option>
+                  <option>Вечер</option>
+                </select>
+              </div>
+              <div class="field field--wide">
+                <label for="f-comment">Комментарий <span class="field__opt">необязательно</span></label>
+                <textarea id="f-comment" name="comment" rows="3" maxlength="500"></textarea>
+              </div>
+              <div class="field field--wide hp" aria-hidden="true">
+                <label for="f-website">Не заполняйте это поле</label>
+                <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+              </div>
+              <div class="field field--wide">
+                <label class="consent">
+                  <input type="checkbox" name="consent" required aria-describedby="f-consent-err">
+                  <span>Я согласен(на) на обработку персональных данных в соответствии с <a href="privacy.html" target="_blank" rel="noopener" data-privacy-link>политикой конфиденциальности</a></span>
+                </label>
+                <p class="field__error" id="f-consent-err"></p>
+              </div>
+            </div>
+
+            <button class="btn btn--light btn--submit" type="submit" data-submit>
+              <span data-submit-text>Отправить заявку</span>
+              <span class="btn__chip"><svg class="icon"><use href="#i-arrow"/></svg></span>
+            </button>
+            <div class="form__status" role="status" aria-live="polite" data-form-status></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contacts" id="contacts" data-section="contacts" aria-labelledby="contacts-title">
+      <div class="container contacts__grid">
+        <div class="contacts__info reveal">
+          <h2 class="section-title" id="contacts-title">Будем рады вас видеть</h2>
+          <dl class="contact-list" data-contact-list></dl>
+          <div class="contacts__actions" data-contact-actions></div>
+        </div>
+        <div class="contacts__map reveal" data-map></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer__wordmark" data-c="brand.name">Название студии</p>
+      <div class="footer__row">
+        <nav aria-label="Разделы сайта">
+          <ul class="footer__links">
+            <li data-section-link="services"><a href="#services">Услуги</a></li>
+            <li data-section-link="gallery"><a href="#gallery">Наши работы</a></li>
+            <li data-section-link="about"><a href="#about">О студии</a></li>
+            <li data-section-link="booking"><a href="#booking">Запись</a></li>
+            <li data-section-link="contacts"><a href="#contacts">Контакты</a></li>
+          </ul>
+        </nav>
+        <div class="footer__contacts" data-footer-contacts></div>
+      </div>
+      <div class="footer__bottom">
+        <p>© <span data-year></span> <span data-c="brand.name">Название студии</span></p>
+        <a href="privacy.html" data-privacy-link>Политика обработки персональных данных</a>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" data-lightbox aria-label="Просмотр фотографии">
+    <div class="lightbox__frame" data-lightbox-frame></div>
+    <button class="round-btn lightbox__close" type="button" data-lightbox-close aria-label="Закрыть просмотр"><svg class="icon"><use href="#i-close"/></svg></button>
+  </dialog>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/presets.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
