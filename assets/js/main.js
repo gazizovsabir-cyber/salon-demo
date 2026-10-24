@@ -91,6 +91,13 @@
       }
     });
 
+    // Отдельная вертикальная версия фото для телефонов; без неё телефон берёт основное фото.
+    $$("[data-img-mobile]").forEach(function (source) {
+      var data = images[source.getAttribute("data-img-mobile")];
+      if (data && data.srcMobile) source.srcset = data.srcMobile;
+      else source.remove();
+    });
+
     // Подпись «фото для примера» — только в демо-режиме и только у стоковых фото.
     $$("[data-credit]").forEach(function (link) {
       var data = images[link.getAttribute("data-credit")];

@@ -25,7 +25,8 @@ window.SITE_CONFIG = {
     title: "",
     subtitle: "",
     image: {
-      src: "https://images.unsplash.com/photo-1626383137804-ff908d2753a2?auto=format&fit=crop&w=2000&q=75",
+      src: "assets/img/hero.jpg",
+      srcMobile: "assets/img/hero-mobile.jpg", // вертикальная версия для телефонов (необязательно)
       alt: "Зал салона: чёрные кожаные кресла мастеров, зеркала и деревянный пол, у стойки администратор",
       credit: "Фото: Giorgio Trovato, Unsplash",
       creditUrl: "https://unsplash.com/photos/OKXwmdbdXkk",
@@ -36,7 +37,7 @@ window.SITE_CONFIG = {
     title: "Красота в деталях",
     text: "Мы уделяем внимание деталям, ценим индивидуальность и стремимся сделать каждый визит комфортным. Для нас важны не только результат, но и атмосфера, в которой вы его получаете.",
     image: {
-      src: "https://images.unsplash.com/photo-1695527081827-fdbc4e77be9b?auto=format&fit=crop&w=1200&q=75",
+      src: "assets/img/about.jpg",
       alt: "Кресло у мойки для волос, растения и белая плитка",
       credit: "Фото: Daniel, Unsplash",
       creditUrl: "https://unsplash.com/photos/Ui6DZ9A1eXU",

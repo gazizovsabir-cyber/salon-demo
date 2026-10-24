@@ -9,12 +9,11 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Название студии — студия красоты">
   <meta property="og:description" content="Пространство, где внимание к деталям становится частью вашего образа.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1626383137804-ff908d2753a2?auto=format&fit=crop&w=1200&h=630&q=75">
+  <meta property="og:image" content="https://gazizovsabir-cyber.github.io/salon-demo/assets/img/og.jpg">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Noto+Serif+Display:wght@200;300;400&display=swap&subset=cyrillic" rel="stylesheet">
-  <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="assets/css/styles.css">
   <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -89,7 +88,10 @@
   <main id="main">
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero__card">
-        <img class="hero__img" data-img="hero.image" src="https://images.unsplash.com/photo-1626383137804-ff908d2753a2?auto=format&fit=crop&w=2000&q=75" alt="Зал салона: чёрные кожаные кресла мастеров, зеркала и деревянный пол, у стойки администратор" fetchpriority="high">
+        <picture>
+          <source media="(max-width: 719px)" srcset="assets/img/hero-mobile.jpg" data-img-mobile="hero.image">
+          <img class="hero__img" data-img="hero.image" src="assets/img/hero.jpg" alt="Зал салона: чёрные кожаные кресла мастеров, зеркала и деревянный пол, у стойки администратор" fetchpriority="high">
+        </picture>
         <div class="hero__shade" aria-hidden="true"></div>
 
         <p class="hero__wordmark" aria-hidden="true" data-fit data-c="brand.name">Название студии</p>
@@ -176,7 +178,7 @@
           <ul class="features" data-advantages></ul>
         </div>
         <figure class="about__media reveal">
-          <img data-img="about.image" src="https://images.unsplash.com/photo-1695527081827-fdbc4e77be9b?auto=format&fit=crop&w=1200&q=75" alt="Кресло у мойки для волос, растения и белая плитка" loading="lazy">
+          <img data-img="about.image" src="assets/img/about.jpg" alt="Кресло у мойки для волос, растения и белая плитка" loading="lazy">
           <a class="photo-credit photo-credit--dark" data-credit="about.image" href="https://unsplash.com/photos/Ui6DZ9A1eXU" target="_blank" rel="noopener">Фото для примера</a>
         </figure>
       </div>

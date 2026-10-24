@@ -278,6 +278,8 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
   background: #6f6b66;
 }
 
+.hero picture { display: contents; }
+
 .hero__img {
   position: absolute;
   inset: 0;
