@@ -741,8 +741,55 @@
       url.hash = "";
       location.href = url.toString();
     });
+    setupAccentSwitch($("[data-accent-switch]", bar));
+
     bar.hidden = false;
     document.documentElement.classList.add("is-demo");
+    // Полоса на телефоне может занять две строки — первый экран учитывает её настоящую высоту.
+    var syncHeight = function () { document.documentElement.style.setProperty("--demo-h", bar.offsetHeight + "px"); };
+    syncHeight();
+    window.addEventListener("resize", syncHeight);
+  }
+
+  // Цвета для показа клиенту. Белый текст читается на каждом из них.
+  var demoAccents = [
+    { id: "teal", name: "Бирюзовый", value: "#3f5d5a" },
+    { id: "wine", name: "Бордовый", value: "#6b2e3a" },
+    { id: "olive", name: "Оливковый", value: "#4f5a35" },
+    { id: "graphite", name: "Графитовый", value: "#2f3437" },
+    { id: "powder", name: "Пудровый", value: "#8a5a5f" },
+  ];
+
+  function setupAccentSwitch(group) {
+    if (!group) return;
+    var fromUrl = new URLSearchParams(location.search).get("accent");
+    var current = demoAccents.filter(function (a) { return a.id === fromUrl; })[0] ||
+      demoAccents.filter(function (a) { return a.value === String(config.accent).toLowerCase(); })[0];
+    if (current) document.documentElement.style.setProperty("--accent", current.value);
+
+    demoAccents.forEach(function (a) {
+      var label = el("label", "swatch");
+      label.title = a.name;
+      var input = el("input");
+      input.type = "radio";
+      input.name = "accent";
+      input.value = a.id;
+      input.checked = !!current && current.id === a.id;
+      input.setAttribute("aria-label", a.name);
+      var dot = el("span", "swatch__dot");
+      dot.style.background = a.value;
+      label.appendChild(input);
+      label.appendChild(dot);
+      group.appendChild(label);
+
+      input.addEventListener("change", function () {
+        document.documentElement.style.setProperty("--accent", a.value);
+        // Цвет попадает в адрес страницы — такой ссылкой можно сразу поделиться с клиентом.
+        var url = new URL(location.href);
+        url.searchParams.set("accent", a.id);
+        history.replaceState(null, "", url.toString());
+      });
+    });
   }
 
   /* ---------- Запуск ---------- */

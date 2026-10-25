@@ -1103,12 +1103,12 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
 }
 
 /* ---------- Demo bar ---------- */
-.is-demo { --demo-h: 44px; }
 .demo-bar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 8px 14px;
+  gap: 2px 14px;
   min-height: 44px;
   padding: 4px var(--gutter);
   background: var(--ink);
@@ -1117,7 +1117,33 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
 }
 .demo-bar__badge { font-weight: 600; letter-spacing: 0.04em; white-space: nowrap; }
 .demo-bar__text { display: none; color: rgba(245, 242, 236, 0.72); }
-@media (min-width: 720px) { .demo-bar__text { display: inline; } }
+@media (min-width: 1024px) { .demo-bar__text { display: inline; } }
+
+.demo-bar__colors {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.swatch {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 36px;
+  cursor: pointer;
+}
+.swatch input { position: absolute; opacity: 0; pointer-events: none; }
+.swatch__dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(245, 242, 236, 0.35);
+  transition: box-shadow 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+}
+.swatch:hover .swatch__dot { transform: scale(1.1); }
+.swatch input:checked + .swatch__dot { box-shadow: 0 0 0 2px var(--ink), 0 0 0 3.5px var(--bg); }
+.swatch input:focus-visible + .swatch__dot { outline: 2px solid var(--bg); outline-offset: 4px; }
 .demo-bar select {
   min-height: 36px;
   padding: 0 30px 0 12px;
