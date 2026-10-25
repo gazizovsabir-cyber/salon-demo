@@ -21,7 +21,7 @@
   --radius-sm: 14px;
 
   --gutter: 16px;
-  --container: 1840px; /* одна ширина для шапки, первого экрана и всех разделов */
+  --container: 1680px; /* одна ширина для шапки, первого экрана и всех разделов */
   --header-h: 68px;
   --section-gap: clamp(88px, 7vw + 48px, 160px);
 
@@ -33,7 +33,7 @@
   :root { --gutter: 24px; --header-h: 76px; }
 }
 @media (min-width: 1024px) {
-  :root { --gutter: 40px; }
+  :root { --gutter: 48px; }
 }
 
 /* ---------- Base ---------- */
@@ -678,55 +678,105 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
 }
 
 /* ---------- About ---------- */
+/* Фото с аркой сверху заходит на тонированную плашку с текстом. */
 .about__grid {
   display: grid;
-  gap: 40px;
+  --panel: color-mix(in oklab, var(--accent) 7%, #f1ece5);
+}
+.about__media {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  width: min(88%, 520px);
+  aspect-ratio: 4 / 5;
+  /* полукруг сверху: горизонтальный радиус 50% ширины = 40% высоты при 4:5 */
+  border-radius: 50% 50% var(--radius-lg) var(--radius-lg) / 40% 40% var(--radius-lg) var(--radius-lg);
+  background: var(--frame);
+}
+.about__media img { width: 100%; height: 100%; object-fit: cover; }
+.about__media .photo-credit { top: auto; bottom: 16px; left: 16px; right: auto; }
+
+.about__panel {
+  margin-top: -72px;
+  padding: 104px 20px 28px;
+  border-radius: var(--radius-lg);
+  background: var(--panel);
 }
 .about__lead { max-width: 52ch; }
 
-/* Преимущества — типографический список: заголовок антиквой, пояснение рядом, тонкие линии между строками. */
+/* Преимущества — раскрывающийся список: заголовок антиквой и кнопка «+», пояснение под ним. */
 .features {
-  margin-top: 40px;
+  margin-top: 32px;
   border-top: 1px solid var(--line);
 }
-.feature {
-  display: grid;
-  gap: 6px;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--line);
+.feature { border-bottom: 1px solid var(--line); }
+.feature__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  list-style: none;
+  cursor: pointer;
 }
+.feature__head::-webkit-details-marker { display: none; }
+.feature__head:focus-visible { outline-offset: 4px; }
 .feature__title {
   font-family: var(--serif);
   font-weight: 300;
   font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem);
   line-height: 1.2;
   letter-spacing: -0.01em;
+  color: var(--ink-2);
   transition: color 0.3s var(--ease-out);
 }
-.feature:hover .feature__title { color: var(--accent); }
-.feature__text {
-  font-size: 0.9375rem;
-  line-height: 1.55;
-  color: var(--ink-2);
-  max-width: 40ch;
-}
-
-.about__media {
+.feature[open] .feature__title { color: var(--ink); }
+.feature__head:hover .feature__title { color: var(--accent); }
+.feature__toggle {
   position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  aspect-ratio: 4 / 5;
-  background: var(--frame);
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  color: var(--ink-2);
 }
-.about__media img { width: 100%; height: 100%; object-fit: cover; }
-.photo-credit--dark { top: 16px; left: 16px; right: auto; }
+.feature__toggle::before,
+.feature__toggle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 11px;
+  height: 1px;
+  margin: -0.5px 0 0 -5.5px;
+  background: currentColor;
+  transition: transform 0.35s var(--ease-out);
+}
+.feature__toggle::after { transform: rotate(90deg); }
+.feature[open] .feature__toggle { color: var(--ink); }
+.feature[open] .feature__toggle::after { transform: rotate(0deg); }
+.feature__text {
+  padding-bottom: 20px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 46ch;
+}
 
 @media (min-width: 720px) {
-  .feature { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: baseline; padding: 24px 0; }
+  .about__panel { margin-top: -96px; padding: 136px 48px 44px; }
 }
 @media (min-width: 1024px) {
-  .about__grid { grid-template-columns: 1.05fr 1fr; gap: 72px; align-items: center; }
-  .about__media { aspect-ratio: 5 / 6; max-height: 760px; width: 100%; }
+  .about__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; }
+  .about__media { grid-column: 1 / 6; grid-row: 1; width: 100%; }
+  .about__panel {
+    grid-column: 5 / 13;
+    grid-row: 1;
+    margin-top: clamp(72px, 7vw, 128px);
+    /* слева отступ на ширину колонки, которую перекрывает фото */
+    padding: clamp(44px, 4vw, 72px) clamp(44px, 4vw, 80px) clamp(44px, 4vw, 72px) calc(12.5% + clamp(44px, 4vw, 72px));
+  }
 }
 
 /* ---------- Gallery ---------- */

@@ -269,11 +269,17 @@
     if (!list) return;
     var items = config.advantages || [];
     if (!items.length) { list.remove(); return; }
-    items.forEach(function (a) {
-      var li = el("li", "feature");
-      li.appendChild(el("h3", "feature__title", a.title));
-      if (a.text) li.appendChild(el("p", "feature__text", a.text));
-      list.appendChild(li);
+    // Раскрывающийся список: открыт первый пункт, при открытии другого предыдущий закрывается.
+    items.forEach(function (a, i) {
+      var item = el("details", "feature");
+      item.setAttribute("name", "advantages");
+      if (i === 0) item.open = true;
+      var summary = el("summary", "feature__head");
+      summary.appendChild(el("h3", "feature__title", a.title));
+      summary.appendChild(el("span", "feature__toggle"));
+      item.appendChild(summary);
+      if (a.text) item.appendChild(el("p", "feature__text", a.text));
+      list.appendChild(item);
     });
   }
 
