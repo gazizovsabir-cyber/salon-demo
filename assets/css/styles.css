@@ -110,6 +110,9 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
 
 [hidden] { display: none !important; }
 
+/* Пока страница настраивается (цвет и тексты из config.js и ссылки), цвета меняются без плавного перехода. */
+.is-booting *, .is-booting *::before, .is-booting *::after { transition: none !important; }
+
 /* ---------- Buttons ---------- */
 .btn {
   display: inline-flex;

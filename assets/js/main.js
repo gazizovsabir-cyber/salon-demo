@@ -808,6 +808,11 @@
   setupDemoBar();
   setupReveal();
 
+  // Настройка закончена — включаем плавные переходы обратно.
+  var booted = function () { document.documentElement.classList.remove("is-booting"); };
+  requestAnimationFrame(function () { requestAnimationFrame(booted); });
+  setTimeout(booted, 400); // на случай вкладки в фоне, где кадры не рисуются
+
   fitWordmarks();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitWordmarks);
   var resizeTimer;
