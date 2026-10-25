@@ -371,39 +371,6 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
   margin-top: 24px;
 }
 
-.hero__scroll {
-  display: none;
-  position: absolute;
-  left: 50%;
-  bottom: 28px;
-  transform: translateX(-50%);
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.85);
-  text-decoration: none;
-}
-.hero__mouse {
-  width: 22px;
-  height: 34px;
-  border: 1.5px solid currentColor;
-  border-radius: 12px;
-  position: relative;
-}
-.hero__mouse::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 7px;
-  width: 2px;
-  height: 7px;
-  margin-left: -1px;
-  border-radius: 2px;
-  background: currentColor;
-}
-
 .photo-credit {
   position: absolute;
   top: 14px;
@@ -446,7 +413,6 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
   .hero__wordmark { grid-column: 1 / -1; padding: 24px 36px 0; }
   .hero__aside { grid-column: 2; grid-row: 2; margin: 32px 40px 0 0; padding: 0; }
   .hero__main { grid-column: 1; grid-row: 3; padding: 0 40px 92px; }
-  .hero__scroll { display: flex; bottom: 72px; }
   .hero .photo-credit { right: 24px; bottom: 68px; }
 }
 
