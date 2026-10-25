@@ -21,7 +21,7 @@
   --radius-sm: 14px;
 
   --gutter: 16px;
-  --container: 1320px;
+  --container: 1840px; /* одна ширина для шапки, первого экрана и всех разделов */
   --header-h: 68px;
   --section-gap: clamp(88px, 7vw + 48px, 160px);
 
@@ -31,6 +31,9 @@
 
 @media (min-width: 720px) {
   :root { --gutter: 24px; --header-h: 76px; }
+}
+@media (min-width: 1024px) {
+  :root { --gutter: 40px; }
 }
 
 /* ---------- Base ---------- */
@@ -192,8 +195,7 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
   align-items: center;
   gap: 24px;
   height: var(--header-h);
-  padding-inline: var(--gutter);
-  max-width: 1680px;
+  width: min(100% - var(--gutter) * 2, var(--container));
   margin-inline: auto;
 }
 
@@ -275,7 +277,7 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: max(560px, calc(100svh - var(--header-h) - var(--demo-h, 0px) - 64px));
-  max-width: 1680px;
+  max-width: var(--container);
   margin-inline: auto;
   border-radius: var(--radius-lg);
   color: #fff;
@@ -727,7 +729,7 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
 }
 @media (min-width: 1024px) {
   .about__grid { grid-template-columns: 1.05fr 1fr; gap: 72px; align-items: center; }
-  .about__media { aspect-ratio: 5 / 6; }
+  .about__media { aspect-ratio: 5 / 6; max-height: 760px; width: 100%; }
 }
 
 /* ---------- Gallery ---------- */
