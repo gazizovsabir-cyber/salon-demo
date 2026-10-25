@@ -3,9 +3,10 @@
   --accent: #3f5d5a; /* перезаписывается из config.js */
   --accent-ink: #ffffff;
 
-  --bg: #f5f2ec;
+  --bg: color-mix(in oklab, var(--accent) 5%, #f5f2ec);
   --surface: #fcfbf8;
-  --frame: color-mix(in oklab, var(--accent) 7%, #efebe4);
+  --frame: color-mix(in oklab, var(--accent) 12%, #efebe4);
+  --accent-deep: color-mix(in oklab, var(--accent) 72%, #0d0d0c);
   --ink: #1d1d1b;
   --ink-2: #5d5a54;
   --ink-3: #69655e;
@@ -138,12 +139,12 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
 .btn__chip--lg { width: 48px; height: 48px; }
 .btn:hover .btn__chip, .quickbook__submit:hover .btn__chip { transform: translateX(3px) rotate(-45deg); }
 
-.btn--dark { background: var(--ink); color: var(--bg); }
-.btn--dark .btn__chip { background: var(--bg); color: var(--ink); }
-.btn--dark:hover { background: #333230; }
+.btn--dark { background: var(--accent); color: var(--accent-ink); }
+.btn--dark .btn__chip { background: var(--accent-ink); color: var(--accent); }
+.btn--dark:hover { background: var(--accent-deep); }
 
 .btn--light { background: #fff; color: var(--ink); }
-.btn--light .btn__chip { background: var(--ink); color: #fff; }
+.btn--light .btn__chip { background: var(--accent); color: var(--accent-ink); }
 .btn--light:hover { background: var(--bg); }
 
 .btn--ghost {
@@ -225,8 +226,8 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
   height: 44px;
   border: 0;
   border-radius: 50%;
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--accent);
+  color: var(--accent-ink);
   cursor: pointer;
 }
 
@@ -300,6 +301,14 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
     radial-gradient(70% 60% at 0% 85%, rgba(22, 22, 20, 0.55), transparent 72%),
     linear-gradient(180deg, rgba(22, 22, 20, 0.5) 0%, rgba(22, 22, 20, 0.12) 34%, rgba(22, 22, 20, 0.08) 50%, rgba(22, 22, 20, 0.66) 100%);
 }
+/* Лёгкий тон акцента поверх фото: снимок «окрашивается» в цвет студии. */
+.hero__shade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(200deg, color-mix(in oklab, var(--accent-deep) 35%, transparent) 0%, transparent 45%, color-mix(in oklab, var(--accent-deep) 62%, transparent) 100%);
+  mix-blend-mode: multiply;
+}
 
 .hero__wordmark {
   padding: 18px 16px 0;
@@ -336,7 +345,7 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
 }
 .hero__tags li {
   padding: 4px 12px;
-  background: rgba(22, 22, 20, 0.5);
+  background: color-mix(in oklab, var(--accent-deep) 70%, transparent);
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 999px;
   font-size: 0.75rem;
@@ -512,14 +521,14 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
   padding: 4px 4px 4px 20px;
   border: 0;
   border-radius: 999px;
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--accent);
+  color: var(--accent-ink);
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s var(--ease-out);
 }
-.quickbook__submit:hover { background: #333230; }
-.quickbook__submit .btn__chip { background: var(--bg); color: var(--ink); }
+.quickbook__submit:hover { background: var(--accent-deep); }
+.quickbook__submit .btn__chip { background: var(--accent-ink); color: var(--accent); }
 
 @media (min-width: 720px) {
   .quickbook {
@@ -628,7 +637,8 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
   right: 10px;
   padding: 3px 10px;
   border-radius: 999px;
-  background: var(--surface);
+  background: var(--accent);
+  color: var(--accent-ink);
   font-size: 0.75rem;
   font-weight: 500;
 }
@@ -1063,8 +1073,10 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
 /* ---------- Footer ---------- */
 .site-footer {
   margin-top: var(--section-gap);
-  padding: 48px 0 calc(28px + env(safe-area-inset-bottom));
-  border-top: 1px solid var(--line);
+  padding: 56px 0 calc(28px + env(safe-area-inset-bottom));
+  background: var(--accent-deep);
+  color: var(--accent-ink);
+  --footer-muted: color-mix(in oklab, var(--accent-ink) 74%, var(--accent-deep));
 }
 .footer__wordmark {
   font-family: var(--serif);
@@ -1078,14 +1090,14 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
   gap: 24px;
   margin-top: 40px;
   padding-top: 28px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid color-mix(in oklab, var(--accent-ink) 22%, transparent);
 }
 .footer__links { display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: 0.9375rem; }
-.footer__links a { text-decoration: none; color: var(--ink-2); }
-.footer__links a:hover { color: var(--ink); }
-.footer__contacts { display: grid; gap: 4px; font-size: 0.9375rem; color: var(--ink-2); }
+.footer__links a { text-decoration: none; color: var(--footer-muted); }
+.footer__links a:hover { color: var(--accent-ink); }
+.footer__contacts { display: grid; gap: 4px; font-size: 0.9375rem; color: var(--footer-muted); }
 .footer__contacts a { text-decoration: none; }
-.footer__contacts a:hover { color: var(--ink); text-decoration: underline; }
+.footer__contacts a:hover { color: var(--accent-ink); text-decoration: underline; }
 .footer__bottom {
   display: flex;
   flex-wrap: wrap;
@@ -1093,7 +1105,7 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
   gap: 8px 24px;
   margin-top: 32px;
   font-size: 0.8125rem;
-  color: var(--ink-2);
+  color: var(--footer-muted);
 }
 .footer__bottom a { color: inherit; }
 
