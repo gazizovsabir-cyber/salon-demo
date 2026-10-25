@@ -684,34 +684,31 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
 }
 .about__lead { max-width: 52ch; }
 
+/* Преимущества — типографический список: заголовок антиквой, пояснение рядом, тонкие линии между строками. */
 .features {
-  display: grid;
-  gap: 28px 32px;
   margin-top: 40px;
-  padding-top: 32px;
   border-top: 1px solid var(--line);
 }
-.feature__icon {
+.feature {
   display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  color: var(--accent);
+  gap: 6px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
 }
 .feature__title {
-  margin-top: 14px;
-  font-size: 1.0625rem;
-  font-weight: 500;
-  line-height: 1.35;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  transition: color 0.3s var(--ease-out);
 }
+.feature:hover .feature__title { color: var(--accent); }
 .feature__text {
-  margin-top: 6px;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   line-height: 1.55;
   color: var(--ink-2);
-  max-width: 34ch;
+  max-width: 40ch;
 }
 
 .about__media {
@@ -724,8 +721,8 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
 .about__media img { width: 100%; height: 100%; object-fit: cover; }
 .photo-credit--dark { top: 16px; left: 16px; right: auto; }
 
-@media (min-width: 560px) {
-  .features { grid-template-columns: 1fr 1fr; }
+@media (min-width: 720px) {
+  .feature { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: baseline; padding: 24px 0; }
 }
 @media (min-width: 1024px) {
   .about__grid { grid-template-columns: 1.05fr 1fr; gap: 72px; align-items: center; }

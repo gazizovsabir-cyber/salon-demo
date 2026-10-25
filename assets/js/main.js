@@ -271,9 +271,6 @@
     if (!items.length) { list.remove(); return; }
     items.forEach(function (a) {
       var li = el("li", "feature");
-      var ic = el("span", "feature__icon");
-      ic.appendChild(icon(a.icon || "detail"));
-      li.appendChild(ic);
       li.appendChild(el("h3", "feature__title", a.title));
       if (a.text) li.appendChild(el("p", "feature__text", a.text));
       list.appendChild(li);
