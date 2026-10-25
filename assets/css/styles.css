@@ -775,7 +775,7 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
     grid-row: 1;
     margin-top: clamp(72px, 7vw, 128px);
     /* слева отступ на ширину колонки, которую перекрывает фото */
-    padding: clamp(44px, 4vw, 72px) clamp(44px, 4vw, 80px) clamp(44px, 4vw, 72px) calc(12.5% + clamp(44px, 4vw, 72px));
+    padding: 56px 64px 56px calc(12.5% + 56px);
   }
 }
 
