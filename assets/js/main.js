@@ -46,7 +46,6 @@
   var preset = presets[type] || {};
   var brand = config.brand || {};
   var hero = config.hero || {};
-  var about = config.about || {};
   var contacts = config.contacts || {};
   var formConfig = config.form || {};
   var sections = config.sections || {};
@@ -56,8 +55,6 @@
     "hero.label": hero.label || preset.label || "",
     "hero.title": hero.title || preset.title || "",
     "hero.subtitle": hero.subtitle || preset.subtitle || "",
-    "about.title": about.title || "",
-    "about.text": about.text || "",
   };
 
   var services = (Array.isArray(config.services) ? config.services : preset.services || [])
@@ -82,7 +79,7 @@
       logoLink.appendChild(img);
     }
 
-    var images = { "hero.image": hero.image, "about.image": about.image };
+    var images = { "hero.image": hero.image };
     $$("[data-img]").forEach(function (img) {
       var data = images[img.getAttribute("data-img")];
       if (data && data.src) {
@@ -209,7 +206,11 @@
         var body = el("div", "service-card__body");
         body.appendChild(el("h3", "service-card__title", s.title));
         if (s.text) body.appendChild(el("p", "service-card__text", s.text));
-        if (s.price) body.appendChild(el("p", "service-card__price", s.price));
+        // Строка цены есть всегда; пока цены нет — после «Цена:» остаётся место, чтобы вписать её позже.
+        var price = el("p", "service-card__price");
+        price.appendChild(el("span", "service-card__price-label", "Цена:"));
+        price.appendChild(el("span", "service-card__price-value" + (s.price ? "" : " is-empty"), s.price || ""));
+        body.appendChild(price);
         li.appendChild(body);
 
         var cta = el("a", "service-card__foot");
@@ -260,27 +261,6 @@
     track.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     update();
-  }
-
-  /* ---------- Преимущества ---------- */
-
-  function renderAdvantages() {
-    var list = $("[data-advantages]");
-    if (!list) return;
-    var items = config.advantages || [];
-    if (!items.length) { list.remove(); return; }
-    // Раскрывающийся список: открыт первый пункт, при открытии другого предыдущий закрывается.
-    items.forEach(function (a, i) {
-      var item = el("details", "feature");
-      item.setAttribute("name", "advantages");
-      if (i === 0) item.open = true;
-      var summary = el("summary", "feature__head");
-      summary.appendChild(el("h3", "feature__title", a.title));
-      summary.appendChild(el("span", "feature__toggle"));
-      item.appendChild(summary);
-      if (a.text) item.appendChild(el("p", "feature__text", a.text));
-      list.appendChild(item);
-    });
   }
 
   /* ---------- Галерея ---------- */
@@ -342,6 +322,7 @@
     if (contacts.telegram) list.push({ label: "Telegram", href: "https://t.me/" + contacts.telegram.replace(/^@/, ""), icon: "chat" });
     if (contacts.whatsapp) list.push({ label: "WhatsApp", href: "https://wa.me/" + contacts.whatsapp.replace(/\D/g, ""), icon: "chat" });
     if (contacts.vk) list.push({ label: "ВКонтакте", href: contacts.vk, icon: "chat" });
+    if (contacts.max) list.push({ label: "MAX", href: contacts.max, icon: "chat" });
     return list;
   }
   function routeUrl() {
@@ -531,11 +512,13 @@
     var target = document.getElementById("booking");
     if (!form || !target) return;
     Object.keys(values || {}).forEach(function (name) {
+      if (name === "time") { if (values.time) setSlot(values.time); return; }
       var field = form.elements[name];
       if (field && values[name]) {
         field.value = values[name];
         field.classList.toggle("has-value", !!field.value);
         clearError(field);
+        field.dispatchEvent(new Event("change", { bubbles: true })); // дата влияет на доступное время
       }
     });
     target.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
@@ -569,6 +552,148 @@
       input.addEventListener("input", sync);
       input.addEventListener("change", sync);
     });
+  }
+
+  /* ---------- Выбор времени: окна по 15 минут ---------- */
+
+  var slotsConfig = formConfig.slots || {};
+  var setSlot = function () {};
+
+  function toMinutes(t) { var p = String(t).split(":"); return +p[0] * 60 + (+p[1] || 0); }
+  function toTime(m) { return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); }
+
+  // Окна «12:00–12:15», разложенные по периодам утро / день / вечер.
+  function buildPeriods() {
+    var from = toMinutes(slotsConfig.from || "10:00");
+    var to = toMinutes(slotsConfig.to || "21:00");
+    var step = Math.max(5, +slotsConfig.step || 15);
+    var dayFrom = toMinutes(slotsConfig.dayFrom || "12:00");
+    var eveningFrom = toMinutes(slotsConfig.eveningFrom || "17:00");
+    var periods = [
+      { id: "morning", name: "Утро", start: from, end: Math.min(dayFrom, to) },
+      { id: "day", name: "День", start: Math.max(dayFrom, from), end: Math.min(eveningFrom, to) },
+      { id: "evening", name: "Вечер", start: Math.max(eveningFrom, from), end: to },
+    ];
+    return periods.filter(function (p) { return p.end - p.start >= step; }).map(function (p) {
+      p.slots = [];
+      for (var m = p.start; m + step <= p.end; m += step) {
+        p.slots.push({ start: m, label: toTime(m) + "–" + toTime(m + step), from: toTime(m), to: toTime(m + step) });
+      }
+      p.range = toTime(p.start) + "–" + toTime(p.end);
+      return p;
+    });
+  }
+
+  function setupSlots() {
+    var periods = buildPeriods();
+
+    // Быстрая запись под первым экраном: обычный список, сгруппированный по периодам.
+    $$("[data-slot-select]").forEach(function (select) {
+      periods.forEach(function (p) {
+        var group = el("optgroup");
+        group.label = p.name + " · " + p.range;
+        p.slots.forEach(function (sl) {
+          var opt = el("option", null, sl.label);
+          opt.value = sl.label;
+          group.appendChild(opt);
+        });
+        select.appendChild(group);
+      });
+    });
+
+    var box = $("[data-slots]");
+    if (!box || !form) return;
+    var tabs = $("[data-slot-periods]", box);
+    var groups = $("[data-slot-groups]", box);
+    var summary = $("[data-slot-summary]", box);
+    var reset = $("[data-slot-reset]", box);
+    var anyTime = $('input[name="time"][value=""]', box);
+    var dateInput = form.elements.date;
+    var current = null;
+
+    // Переключатель периода показывает один период за раз; сам выбор — обычные радиокнопки.
+    function showPeriod(id) {
+      current = id;
+      $$(".slots__period", tabs).forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.period === id)); });
+      $$(".slots__group", groups).forEach(function (g) { g.hidden = g.dataset.period !== id; });
+    }
+
+    periods.forEach(function (p) {
+      var btn = el("button", "slots__period");
+      btn.type = "button";
+      btn.dataset.period = p.id;
+      btn.appendChild(el("span", "slots__period-name", p.name));
+      btn.appendChild(el("span", "slots__period-range", p.range));
+      btn.addEventListener("click", function () { showPeriod(p.id); });
+      tabs.appendChild(btn);
+
+      var grid = el("div", "slots__group");
+      grid.dataset.period = p.id;
+      grid.setAttribute("role", "group");
+      grid.setAttribute("aria-label", p.name + ", " + p.range);
+      p.slots.forEach(function (sl, i) {
+        var label = el("label", "slot");
+        label.style.setProperty("--i", i);
+        var input = el("input");
+        input.type = "radio";
+        input.name = "time";
+        input.value = sl.label;
+        input.dataset.start = sl.start;
+        label.appendChild(input);
+        var face = el("span", "slot__face");
+        face.appendChild(el("span", "slot__from", sl.from));
+        face.appendChild(el("span", "slot__to", "до " + sl.to));
+        label.appendChild(face);
+        grid.appendChild(label);
+      });
+      grid.appendChild(el("p", "slots__empty", "На сегодня это время уже прошло — выберите другой период или день."));
+      groups.appendChild(grid);
+    });
+
+    function sync() {
+      var checked = $('input[name="time"]:checked', box);
+      var value = checked ? checked.value : "";
+      summary.textContent = value ? "Вы выбрали " + value : "Любое время";
+      summary.classList.toggle("is-set", !!value);
+      reset.hidden = !value;
+    }
+
+    // Если выбран сегодняшний день, прошедшие окна недоступны.
+    function lockPast() {
+      var d = new Date();
+      var today = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+      var now = dateInput && dateInput.value === today ? d.getHours() * 60 + d.getMinutes() : -1;
+      $$(".slot input", box).forEach(function (input) {
+        input.disabled = +input.dataset.start <= now;
+        if (input.disabled && input.checked) anyTime.checked = true;
+      });
+      // Период, где все окна прошли, показывает пояснение; открытым остаётся период со свободным временем.
+      $$(".slots__group", groups).forEach(function (g) {
+        g.classList.toggle("is-past", !$(".slot input:not(:disabled)", g));
+      });
+      var open = $('.slots__group[data-period="' + current + '"]', groups);
+      if (open && open.classList.contains("is-past")) {
+        var free = $$(".slots__group", groups).filter(function (g) { return !g.classList.contains("is-past"); })[0];
+        if (free) showPeriod(free.dataset.period);
+      }
+      sync();
+    }
+
+    setSlot = function (value) {
+      var input = $$(".slot input", box).filter(function (i) { return i.value === value && !i.disabled; })[0];
+      if (!input) return;
+      input.checked = true;
+      showPeriod(input.closest(".slots__group").dataset.period);
+      sync();
+    };
+
+    box.addEventListener("change", sync);
+    reset.addEventListener("click", function () { anyTime.checked = true; sync(); });
+    if (dateInput) dateInput.addEventListener("change", lockPast);
+    form.addEventListener("reset", function () { setTimeout(lockPast); });
+
+    showPeriod(periods.some(function (p) { return p.id === "day"; }) ? "day" : periods[0] && periods[0].id);
+    lockPast();
   }
 
   var messages = {
@@ -801,12 +926,12 @@
   applySections();
   prepareWordmarks();
   renderServices();
-  renderAdvantages();
   renderGallery();
   renderContacts();
   setupHeader();
   setupBookingLinks();
   setupDates();
+  setupSlots();
   setupForm();
   setupDemoBar();
   setupReveal();
