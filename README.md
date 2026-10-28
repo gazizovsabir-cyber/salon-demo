@@ -11,7 +11,7 @@
 | `assets/js/presets.js` | Готовые тексты и услуги для 5 типов бизнеса |
 | `assets/js/main.js` | Логика: подстановка данных, меню, услуги, галерея, форма |
 | `assets/css/styles.css` | Стили. Цвета и размеры собраны в начале файла (`:root`) |
-| `assets/css/fonts.css`, `assets/fonts/` | Шрифты Manrope и Noto Serif Display (лицензия OFL). Хранятся на сайте, чтобы не зависеть от Google Fonts |
+| `assets/css/fonts.css`, `assets/fonts/` | Шрифты Manrope и Cormorant Garamond (лицензия OFL). Хранятся на сайте, чтобы не зависеть от Google Fonts |
 | `assets/img/` | Фотографии сайта |
 | `privacy.html` | Шаблон политики обработки персональных данных |
 | `examples/send-telegram.php` | Пример обработчика, который пересылает заявки в Telegram |
