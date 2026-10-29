@@ -1090,6 +1090,8 @@ html { scrollbar-color: var(--ink-3) var(--bg); }
 }
 
 .contacts__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+/* Кнопки без кружка-стрелки: отступы поровну с двух сторон, иначе текст прижат к правому краю. */
+.contacts__actions .btn { padding: 6px 24px; }
 .btn--outline { padding: 6px 24px; border-color: var(--line-strong); color: var(--ink); }
 .btn--outline:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .btn[aria-disabled="true"] { background: transparent; color: var(--ink-2); border: 1px dashed var(--line-strong); pointer-events: none; }
